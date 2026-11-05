@@ -103,33 +103,36 @@ parquet_data/
 └── ... (partitioned subdirectories with parquet files)
 ```
 
-Run PyTest Tests with EPAM ReportPortal
+## Run PyTest Tests with EPAM ReportPortal
 
 EPAM ReportPortal is used to monitor automated test execution, analyze failures, track test history, and visualize test results through dashboards.
 
-1. Install dependencies
+### 1. Install dependencies
 
-Navigate to the PyTest Introduction directory and activate the virtual environment.
+Navigate to the `PyTest Introduction` directory and activate the virtual environment.
 
+```powershell
 cd "PyTest Introduction"
 .\.venv\Scripts\Activate.ps1
+```
 
 Install the required packages:
 
+```bash
 python -m pip install pytest pytest-html pytest-reportportal
+```
 
-2. Configure ReportPortal
+### 2. Configure ReportPortal
 
-Open EPAM ReportPortal and log in using your EPAM account.
+Open [EPAM ReportPortal](https://reportportal.epam.com) and log in using your EPAM account.
 
-Navigate to Projects and find your personal project.
+1. Navigate to **Projects** and find your personal project.
+2. Open **Profile → API Keys**.
+3. Generate an API key if you do not already have one.
 
-Open Profile → API Keys.
+Configure `pytest.ini`:
 
-Generate an API key if you do not already have one.
-
-Configure pytest.ini:
-
+```ini
 [pytest]
 addopts = -v --html=reports/report.html --self-contained-html
 
@@ -143,76 +146,64 @@ rp_launch = DQE_Pytest_Homework
 rp_launch_description = PyTest Introduction Homework
 rp_verify_ssl = True
 rp_log_level = INFO
+```
 
-Security: Do not commit your ReportPortal API key to GitHub.
+**Security:** Do not commit your ReportPortal API key to GitHub.
 
 Set the API key as an environment variable in PowerShell:
 
+```powershell
 $env:RP_API_KEY = "YOUR_API_KEY"
+```
 
-Replace YOUR_API_KEY with your actual ReportPortal API key.
+Replace `YOUR_API_KEY` with your actual ReportPortal API key.
 
-3. Execute tests
+### 3. Execute tests
 
 Run all PyTest tests and send results to ReportPortal:
 
+```bash
 python -m pytest ./tests --reportportal -v
+```
 
 The test results will be available in two locations:
 
-Local HTML Report: reports/report.html
+- **Local HTML Report:** `reports/report.html`
+- **EPAM ReportPortal:** https://reportportal.epam.com
 
-EPAM ReportPortal: https://reportportal.epam.com
+### 4. Monitor test execution
 
-4. Monitor test execution
+1. Open EPAM ReportPortal.
+2. Select the `ivan_chukivskyi_personal` project.
+3. Navigate to **Launches**.
+4. Find the `DQE_Pytest_Homework` launch.
+5. Review Passed, Failed, Skipped, and Expected Failure test results.
+6. Open failed test cases to inspect logs and stack traces.
+7. Use **Make Decision** to classify failures by Defect Type.
 
-Open EPAM ReportPortal.
+### 5. Create a monitoring dashboard
 
-Select the ivan_chukivskyi_personal project.
+1. Navigate to **Launches** and create a filter for `DQE_Pytest_Homework`.
+2. Save the filter.
+3. Navigate to **Dashboards** and create a new dashboard.
+4. Add at least three widgets:
+   - Overall statistics
+   - Launch statistics chart
+   - Most failed test cases
+5. Apply the saved launch filter to each widget.
+6. Use the dashboard to monitor test results and execution trends across multiple runs.
 
-Navigate to Launches.
-
-Find the DQE_Pytest_Homework launch.
-
-Review Passed, Failed, Skipped, and Expected Failure test results.
-
-Open failed test cases to inspect logs and stack traces.
-
-Use Make Decision to classify failures by Defect Type.
-
-5. Create a monitoring dashboard
-
-Navigate to Launches and create a filter for DQE_Pytest_Homework.
-
-Save the filter.
-
-Navigate to Dashboards and create a new dashboard.
-
-Add at least three widgets:
-
-Overall statistics
-
-Launch statistics chart
-
-Most failed test cases
-
-Apply the saved launch filter to each widget.
-
-Use the dashboard to monitor test results and execution trends across multiple runs.
-
-6. Verify results
+### 6. Verify results
 
 Confirm that:
 
-PyTest tests execute successfully.
+- PyTest tests execute successfully.
+- Test results are uploaded to ReportPortal.
+- Failed tests contain logs and stack traces.
+- Defect Types can be assigned to failed tests.
+- The dashboard displays statistics from the selected launches.
 
-Test results are uploaded to ReportPortal.
-
-Failed tests contain logs and stack traces.
-
-Defect Types can be assigned to failed tests.
-
-The dashboard displays statistics from the selected launches.
+**Note:** ReportPortal does not execute tests itself. PyTest runs the tests locally or through CI/CD, while ReportPortal collects and monitors their results.
 
 * Check that report.html file is created:
 
