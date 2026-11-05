@@ -130,23 +130,7 @@ Open [EPAM ReportPortal](https://reportportal.epam.com) and log in using your EP
 2. Open **Profile → API Keys**.
 3. Generate an API key if you do not already have one.
 
-Configure `pytest.ini`:
-
-```ini
-[pytest]
-addopts = -v --html=reports/report.html --self-contained-html
-
-markers =
-    validate_csv: CSV validation tests
-    unmarked: Tests without explicit markers
-
-rp_endpoint = https://reportportal.epam.com
-rp_project = ivan_chukivskyi_personal
-rp_launch = DQE_Pytest_Homework
-rp_launch_description = PyTest Introduction Homework
-rp_verify_ssl = True
-rp_log_level = INFO
-```
+Configure `pytest.ini`
 
 **Security:** Do not commit your ReportPortal API key to GitHub.
 
@@ -174,7 +158,7 @@ The test results will be available in two locations:
 ### 4. Monitor test execution
 
 1. Open EPAM ReportPortal.
-2. Select the `ivan_chukivskyi_personal` project.
+2. Select your project.
 3. Navigate to **Launches**.
 4. Find the `DQE_Pytest_Homework` launch.
 5. Review Passed, Failed, Skipped, and Expected Failure test results.
