@@ -189,9 +189,4 @@ Confirm that:
 
 **Note:** ReportPortal does not execute tests itself. PyTest runs the tests locally or through CI/CD, while ReportPortal collects and monitors their results.
 
-* Check that report.html file is created:
 
-```markdown
-generated_report/
-├── report.html
-```
